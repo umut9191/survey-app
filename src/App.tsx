@@ -14,7 +14,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import SurveyFormOne from './SurveyFormOne';
 import SurveyFormTwo from './SurveyFormTwo';
-import { AgeEnum, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsDrivetrain, optionsGender, optionsTrueFalse, StepsEnum } from './Types';
+import { AgeEnum, ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsCarMakeModel, optionsDrivetrain, optionsGender, optionsTrueFalse, StepsEnum } from './Types';
 
 
 const steps = ['Step One', 'Step Two'];
@@ -34,7 +34,8 @@ function App() {
     isItYourFirstCar: (optionsTrueFalse.find(x => x.label == "") as IOptionsBoolean),
     whichDrivetrainDoYouPrefer: (optionsDrivetrain.find(x => x.label == "") as IOptionsNumber),
     areYouWorriedAboutFuelEmissions: (optionsTrueFalse.find(x => x.label == "") as IOptionsBoolean),
-    howManyCarsDoYouHaveInYourFamily: 1
+    howManyCarsDoYouHaveInYourFamily: 1,
+    careMakesModels : (optionsCarMakeModel.filter(x => x.label == "") as ICarMakeModel[])
   });
   function getStepContent(step: number) {
     //onSurveyCollectChanged={setSurveyCollect}
@@ -42,7 +43,7 @@ function App() {
       case StepsEnum.fistStep:
         return <SurveyFormOne surveyDataCollected={surveyCollect} />;
       case StepsEnum.secondStep:
-        return <SurveyFormTwo surveyDataCollected={surveyCollect} />;
+        return <SurveyFormTwo surveyDataCollected={surveyCollect} setSurveyCollect={setSurveyCollect}/>;
       default:
         throw new Error('Unknown step');
     }
@@ -87,20 +88,16 @@ function App() {
     }
 
   };
-
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
   return (
-
     <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
       <div>
         {JSON.stringify(surveyCollect)}
       </div>
       <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         {showErrorAlert ? (<Alert severity="error">Please fill in all fields as requested!</Alert>) : (<div></div>)}
-
         <Typography component="h1" variant="h4" align="center">
           Customer Survey
         </Typography>
@@ -128,7 +125,6 @@ function App() {
                   </Button>
                 )} */}
                 <Button
-
                   variant="contained"
                   onClick={handleNext}
                   sx={{ mt: 3, ml: 1 }}
@@ -136,7 +132,6 @@ function App() {
                   {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                 </Button>
               </Box>
-
             </React.Fragment>
           )}
         </React.Fragment>

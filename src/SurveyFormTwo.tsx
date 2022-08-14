@@ -4,16 +4,35 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { IOptionsBoolean, IOptionsNumber, ISurveyData, optionsDrivetrain, optionsTrueFalse } from './Types';
+import { ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsCarMakeModel, optionsDrivetrain, optionsTrueFalse } from './Types';
+import CarMakeModelComponent from './CarMakeModelComponent';
 interface ISurveyDataProps {
   surveyDataCollected: ISurveyData
-  /*  onSurveyCollectChanged:Function  */
+  setSurveyCollect:Function  
 }
 const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
-  const { surveyDataCollected } = props;
+  const { surveyDataCollected ,setSurveyCollect} = props;
   const [inputWhichDrivetrainDoYouPrefer, setInputWhichDrivetrainDoYouPrefer] = React.useState(surveyDataCollected.whichDrivetrainDoYouPrefer);
   const [inputAreYouWorriedAboutFuelEmissions, setInputAreYouWorriedAboutFuelEmissions] = React.useState(surveyDataCollected.areYouWorriedAboutFuelEmissions);
   const [inputhowManyCarsDoYouHaveInYourFamily, setinputhowManyCarsDoYouHaveInYourFamily] = React.useState(surveyDataCollected.howManyCarsDoYouHaveInYourFamily)
+  const runThisFunc = (index:number,value:string,label:string,model:string) => {
+    //console.log(e) 
+    console.log("*****") 
+
+   
+     if (value!=="") {
+      console.log(value) 
+      console.log(label) 
+   /*  surveyDataCollected.careMakesModels[index].label = label 
+    surveyDataCollected.careMakesModels[index].value = Number(value)  */
+    
+    }else{
+    surveyDataCollected.careMakesModels[index].model = model 
+    console.log(model) 
+    } 
+    setSurveyCollect(surveyDataCollected)
+    console.log(index)
+  }
   return (
     <React.Fragment>
       <div>
@@ -98,6 +117,10 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
                 const num = Number(e.target.value)
                 if (!isNaN(+num)) {
                   if(num !== 0){
+                    surveyDataCollected.careMakesModels = [];
+                    for (let index = 1; index <= num; index++) {                    
+                      surveyDataCollected.careMakesModels.push(optionsCarMakeModel.find(x => x.label == "") as ICarMakeModel)
+                    }
                     surveyDataCollected.howManyCarsDoYouHaveInYourFamily = num
                     setinputhowManyCarsDoYouHaveInYourFamily(num);
                   }
@@ -109,6 +132,11 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
           }}
           />
         </Grid>
+        {surveyDataCollected.careMakesModels.map((data,index) => (
+       <CarMakeModelComponent key={index} sendKey={index} carMakeModelCollected = {data} func = {runThisFunc}/>
+      ))}
+{/*           <CarMakeModelComponent carMakeModelCollected = {surveyDataCollected.careMakesModels.find(x=>x.label =="") as ICarMakeModel}/>
+ */}        
       </Grid>
     </React.Fragment>
   );
