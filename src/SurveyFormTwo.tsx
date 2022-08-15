@@ -33,9 +33,9 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
   }
   return (
     <React.Fragment>
-      <div>
+  {/*     <div>
         {JSON.stringify(surveyDataCollected)}
-      </div>
+      </div> */}
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField

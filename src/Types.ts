@@ -1,5 +1,17 @@
+export interface ISurveyDataStorage {
+    isSurveyCompleted: boolean
+    age: number
+    gender: number
+    havingCarDrivingLicense: boolean
+    isItYourFirstCar: any
+    whichDrivetrainDoYouPrefer: any
+    areYouWorriedAboutFuelEmissions: any
+    howManyCarsDoYouHaveInYourFamily: number
+    careMakesModels : ICarMakeModel[]
+}
+
+
 export interface ISurveyData {
-    id: number
     surveySubmitResult: ISubmitResult
     age: number
     gender: IOptionsNumber

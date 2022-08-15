@@ -11,7 +11,7 @@ import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import SurveyFormOne from './SurveyFormOne';
 import SurveyFormTwo from './SurveyFormTwo';
-import { AgeEnum, CareMakeEnum, ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsCarMakeModel, optionsDrivetrain, optionsGender, optionsTrueFalse, StepsEnum } from './Types';
+import { AgeEnum, CareMakeEnum, ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, ISurveyDataStorage, optionsCarMakeModel, optionsDrivetrain, optionsGender, optionsTrueFalse, StepsEnum } from './Types';
 
 
 const steps = ['Step One', 'Step Two'];
@@ -23,7 +23,6 @@ function App() {
   const [showErrorAlert, setShowErrorAlert] = React.useState<boolean>(false);
   const [lastMessage, setlastMessage] = React.useState<string>("");
   const [surveyCollect, setSurveyCollect] = React.useState<ISurveyData>({
-    id: 0,
     surveySubmitResult: { success: false, message: "" },
     age: 0,
     gender: (optionsGender.find(x => x.label === "") as IOptionsNumber),
@@ -46,6 +45,26 @@ function App() {
         throw new Error('Unknown step');
     }
   }
+  const handleArrangingAndSavingData = () => {
+   var dataModelInStorage:ISurveyDataStorage[] = [];
+      var datasInStorage = localStorage.getItem('surveyCollect');
+      if(datasInStorage !=null){
+        dataModelInStorage =JSON.parse(datasInStorage) as ISurveyDataStorage[];
+    } 
+    var dataToAddToStorage:ISurveyDataStorage ={
+      isSurveyCompleted: surveyCollect.surveySubmitResult.success,
+      age: surveyCollect.age,
+      gender: surveyCollect.gender.value,
+      havingCarDrivingLicense: surveyCollect.havingCarDrivingLicense.value,
+      isItYourFirstCar: surveyCollect.isItYourFirstCar.value,
+      whichDrivetrainDoYouPrefer: surveyCollect.surveySubmitResult.success? surveyCollect.whichDrivetrainDoYouPrefer.value:null,
+      areYouWorriedAboutFuelEmissions:surveyCollect.surveySubmitResult.success? surveyCollect.areYouWorriedAboutFuelEmissions.value:null,
+      howManyCarsDoYouHaveInYourFamily: surveyCollect.surveySubmitResult.success?surveyCollect.howManyCarsDoYouHaveInYourFamily:0,
+      careMakesModels : surveyCollect.surveySubmitResult.success?surveyCollect.careMakesModels:[]
+    }
+    dataModelInStorage.push(dataToAddToStorage)
+    localStorage.setItem('surveyCollect', JSON.stringify(dataModelInStorage));
+  }
   const handleNext = () => {
     if (activeStep === StepsEnum.fistStep) {
       if (surveyCollect.havingCarDrivingLicense.label === ""
@@ -61,13 +80,16 @@ function App() {
         if (surveyCollect.age < AgeEnum.minAge) {
           setlastMessage("Thank you for taking the time to submit your response")
           setActiveStep(steps.length);
+          handleArrangingAndSavingData();
         } else if (surveyCollect.havingCarDrivingLicense.value === false) {
           setlastMessage("Thank you for your interest")
           setActiveStep(steps.length);
+          handleArrangingAndSavingData();
         }
         else if (surveyCollect.isItYourFirstCar.value === true) {
           setlastMessage("We are targeting more experienced clients, thank you for your interest")
           setActiveStep(steps.length);
+          handleArrangingAndSavingData();
         }
         else {
           setActiveStep(activeStep + 1);
@@ -76,12 +98,16 @@ function App() {
 
     }
     if (activeStep === StepsEnum.secondStep) {
-      if (surveyCollect.areYouWorriedAboutFuelEmissions.label === "") {
+      if (surveyCollect.areYouWorriedAboutFuelEmissions.label === "" || surveyCollect.whichDrivetrainDoYouPrefer.label === "" 
+      || surveyCollect.careMakesModels.filter(x=>x.label === "" || x.model ==="").length > 0
+      ) {
         setShowErrorAlert(true);
       } else {
         setShowErrorAlert(false);
         setlastMessage("Thank you for taking the time to submit your response")
         setActiveStep(activeStep + 1);
+        surveyCollect.surveySubmitResult.success = true
+        handleArrangingAndSavingData();
       }
     }
 
@@ -91,9 +117,9 @@ function App() {
   }; */
   return (
     <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-      <div>
+   {/*    <div>
         {JSON.stringify(surveyCollect)}
-      </div>
+      </div> */}
       <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         {showErrorAlert ? (<Alert severity="error">Please fill in all fields as requested!</Alert>) : (<div></div>)}
         <Typography component="h1" variant="h4" align="center">
