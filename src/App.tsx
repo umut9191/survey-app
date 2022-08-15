@@ -1,20 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import SurveyFormOne from './SurveyFormOne';
 import SurveyFormTwo from './SurveyFormTwo';
-import { AgeEnum, ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsCarMakeModel, optionsDrivetrain, optionsGender, optionsTrueFalse, StepsEnum } from './Types';
+import { AgeEnum, CareMakeEnum, ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsCarMakeModel, optionsDrivetrain, optionsGender, optionsTrueFalse, StepsEnum } from './Types';
 
 
 const steps = ['Step One', 'Step Two'];
@@ -29,13 +26,14 @@ function App() {
     id: 0,
     surveySubmitResult: { success: false, message: "" },
     age: 0,
-    gender: (optionsGender.find(x => x.label == "") as IOptionsNumber),
-    havingCarDrivingLicense: (optionsTrueFalse.find(x => x.label == "") as IOptionsBoolean),
-    isItYourFirstCar: (optionsTrueFalse.find(x => x.label == "") as IOptionsBoolean),
-    whichDrivetrainDoYouPrefer: (optionsDrivetrain.find(x => x.label == "") as IOptionsNumber),
-    areYouWorriedAboutFuelEmissions: (optionsTrueFalse.find(x => x.label == "") as IOptionsBoolean),
+    gender: (optionsGender.find(x => x.label === "") as IOptionsNumber),
+    havingCarDrivingLicense: (optionsTrueFalse.find(x => x.label === "") as IOptionsBoolean),
+    isItYourFirstCar: (optionsTrueFalse.find(x => x.label === "") as IOptionsBoolean),
+    whichDrivetrainDoYouPrefer: (optionsDrivetrain.find(x => x.label === "") as IOptionsNumber),
+    areYouWorriedAboutFuelEmissions: (optionsTrueFalse.find(x => x.label === "") as IOptionsBoolean),
     howManyCarsDoYouHaveInYourFamily: 1,
-    careMakesModels : (optionsCarMakeModel.filter(x => x.label == "") as ICarMakeModel[])
+    careMakesModels : [
+      { value: CareMakeEnum.Default, label: "", model: "" }] as ICarMakeModel[]
   });
   function getStepContent(step: number) {
     //onSurveyCollectChanged={setSurveyCollect}
@@ -49,13 +47,13 @@ function App() {
     }
   }
   const handleNext = () => {
-    if (activeStep == StepsEnum.fistStep) {
-      if (surveyCollect.havingCarDrivingLicense.label == ""
-        || surveyCollect.gender.label == "" || surveyCollect.age>=AgeEnum.maxAgeLimit
-        || surveyCollect.age==AgeEnum.minAgeLimit
+    if (activeStep === StepsEnum.fistStep) {
+      if (surveyCollect.havingCarDrivingLicense.label === ""
+        || surveyCollect.gender.label === "" || surveyCollect.age>=AgeEnum.maxAgeLimit
+        || surveyCollect.age===AgeEnum.minAgeLimit
       ) {
         setShowErrorAlert(true);
-      } else if ((surveyCollect.age >= AgeEnum.minAge && surveyCollect.age <= AgeEnum.rangeAge) && surveyCollect.isItYourFirstCar.label == "") {
+      } else if ((surveyCollect.age >= AgeEnum.minAge && surveyCollect.age <= AgeEnum.rangeAge) && surveyCollect.isItYourFirstCar.label === "") {
         setShowErrorAlert(true);
       }
       else {
@@ -63,11 +61,11 @@ function App() {
         if (surveyCollect.age < AgeEnum.minAge) {
           setlastMessage("Thank you for taking the time to submit your response")
           setActiveStep(steps.length);
-        } else if (surveyCollect.havingCarDrivingLicense.value == false) {
+        } else if (surveyCollect.havingCarDrivingLicense.value === false) {
           setlastMessage("Thank you for your interest")
           setActiveStep(steps.length);
         }
-        else if (surveyCollect.isItYourFirstCar.value == true) {
+        else if (surveyCollect.isItYourFirstCar.value === true) {
           setlastMessage("We are targeting more experienced clients, thank you for your interest")
           setActiveStep(steps.length);
         }
@@ -77,8 +75,8 @@ function App() {
       }
 
     }
-    if (activeStep == StepsEnum.secondStep) {
-      if (surveyCollect.areYouWorriedAboutFuelEmissions.label == "") {
+    if (activeStep === StepsEnum.secondStep) {
+      if (surveyCollect.areYouWorriedAboutFuelEmissions.label === "") {
         setShowErrorAlert(true);
       } else {
         setShowErrorAlert(false);
@@ -88,9 +86,9 @@ function App() {
     }
 
   };
-  const handleBack = () => {
+/*   const handleBack = () => {
     setActiveStep(activeStep - 1);
-  };
+  }; */
   return (
     <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
       <div>

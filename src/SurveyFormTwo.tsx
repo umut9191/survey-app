@@ -1,10 +1,7 @@
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsCarMakeModel, optionsDrivetrain, optionsTrueFalse } from './Types';
+import { CareMakeEnum, ICarMakeModel, IOptionsBoolean, IOptionsNumber, ISurveyData, optionsCarMakeModel, optionsDrivetrain, optionsTrueFalse } from './Types';
 import CarMakeModelComponent from './CarMakeModelComponent';
 interface ISurveyDataProps {
   surveyDataCollected: ISurveyData
@@ -18,19 +15,20 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
   const runThisFunc = (index:number,value:string,label:string,model:string) => {
     //console.log(e) 
     console.log("*****") 
-
+   console.log(surveyDataCollected.careMakesModels.length)
+   console.log(surveyDataCollected.careMakesModels[index])
    
      if (value!=="") {
-      console.log(value) 
-      console.log(label) 
-   /*  surveyDataCollected.careMakesModels[index].label = label 
-    surveyDataCollected.careMakesModels[index].value = Number(value)  */
+/*       console.log(value) 
+      console.log(label)  */
+    surveyDataCollected.careMakesModels[index].label = label 
+     /* */surveyDataCollected.careMakesModels[index].value = Number(value) 
     
     }else{
     surveyDataCollected.careMakesModels[index].model = model 
-    console.log(model) 
+    /* console.log(model)  */
     } 
-    setSurveyCollect(surveyDataCollected)
+    //setSurveyCollect(surveyDataCollected)
     console.log(index)
   }
   return (
@@ -41,7 +39,7 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
-           helperText = {inputWhichDrivetrainDoYouPrefer.label==""?"please choose something!":""}
+           helperText = {inputWhichDrivetrainDoYouPrefer.label===""?"please choose something!":""}
             id="whichDrivetrainDoYouPrefer"
             select
             required
@@ -50,7 +48,7 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
             value={String(inputWhichDrivetrainDoYouPrefer.label)}
             onChange={(e) => {
               try {
-                var val = optionsDrivetrain.find(x => x.label == String(e.target.value)) as IOptionsNumber;
+                var val = optionsDrivetrain.find(x => x.label === String(e.target.value)) as IOptionsNumber;
                 surveyDataCollected.whichDrivetrainDoYouPrefer = val;
                 setInputWhichDrivetrainDoYouPrefer(val);
               } catch (error) {
@@ -72,7 +70,7 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
         <Grid item xs={12}>
 
           <TextField
-          helperText = {inputAreYouWorriedAboutFuelEmissions.label==""?"please choose something!":""}
+          helperText = {inputAreYouWorriedAboutFuelEmissions.label===""?"please choose something!":""}
             id="areYouWorriedAboutFuelEmissions"
             select
             required
@@ -81,7 +79,7 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
             value={String(inputAreYouWorriedAboutFuelEmissions.label)}
             onChange={(e) => {
               try {
-                var val = optionsTrueFalse.find(x => x.label == String(e.target.value)) as IOptionsBoolean;
+                var val = optionsTrueFalse.find(x => x.label === String(e.target.value)) as IOptionsBoolean;
                 surveyDataCollected.areYouWorriedAboutFuelEmissions = val;
                 setInputAreYouWorriedAboutFuelEmissions(val);
                 console.log(val)
@@ -117,10 +115,22 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
                 const num = Number(e.target.value)
                 if (!isNaN(+num)) {
                   if(num !== 0){
-                    surveyDataCollected.careMakesModels = [];
-                    for (let index = 1; index <= num; index++) {                    
-                      surveyDataCollected.careMakesModels.push(optionsCarMakeModel.find(x => x.label == "") as ICarMakeModel)
+                    var careArrayLength = surveyDataCollected.careMakesModels.length
+                    if(num>careArrayLength){
+                      for (let index = careArrayLength; index < num; index++) {                    
+                        surveyDataCollected.careMakesModels.push({ value: CareMakeEnum.Default, label: "", model: "" })
+                      }
                     }
+                    if(num<careArrayLength){
+                      for (let index = num; index < careArrayLength; index++) {                    
+                        surveyDataCollected.careMakesModels.pop()
+                      }
+                    }
+                   
+                   /*  surveyDataCollected.careMakesModels = [];
+                    for (let index = 1; index <= num; index++) {                    
+                      surveyDataCollected.careMakesModels.push({ value: CareMakeEnum.Default, label: "", model: "" })
+                    } */
                     surveyDataCollected.howManyCarsDoYouHaveInYourFamily = num
                     setinputhowManyCarsDoYouHaveInYourFamily(num);
                   }

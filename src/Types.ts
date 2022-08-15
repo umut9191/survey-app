@@ -52,7 +52,7 @@ enum DrivetrainEnum {
     RWD = 2,
     IDontKnow = 3,
 }
-enum CareMakeEnum {
+export enum CareMakeEnum {
     Default = 0,
     BMW = 1,
     AUDI = 2,

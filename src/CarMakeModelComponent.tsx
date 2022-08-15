@@ -29,11 +29,11 @@ const CarMakeModelComponent: React.FunctionComponent<ICarMakeModelProps> = (prop
                     value={String(inputCarMake.label)}
                     onChange={(e) => {
                         try {
-                            var val = optionsCarMakeModel.find(x => x.label == String(e.target.value)) as ICarMakeModel;
+                            var val = optionsCarMakeModel.find(x => x.label === String(e.target.value)) as ICarMakeModel;
                             var result = { value: val.value, label: val.label, model: inputCarMakeModelCollected.model } as ICarMakeModel
                             //carMakeModelCollected = val;
                             setInputCarMake(result);
-                            setInputCarMakeModelCollected(result);
+                            //setInputCarMakeModelCollected(result);
                             func(sendKey, val.value,val.label,"")
                         } catch (error) {
                             console.log(error)
@@ -63,7 +63,7 @@ const CarMakeModelComponent: React.FunctionComponent<ICarMakeModelProps> = (prop
 
                         var result = { value: inputCarMakeModelCollected.value, label: inputCarMakeModelCollected.label, model: e.target.value } as ICarMakeModel
                         setInputModel(e.target.value)
-                        setInputCarMakeModelCollected(result)
+                        //setInputCarMakeModelCollected(result)
                         //func(sendKey, inputCarMakeModelCollected)
                         func(sendKey, "","",e.target.value)
 

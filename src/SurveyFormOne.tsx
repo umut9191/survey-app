@@ -1,11 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Autocomplete from '@mui/material/Autocomplete';
-import { useFormControl } from '@mui/material/FormControl';
 import { ISurveyData, optionsGender, optionsTrueFalse, IOptionsBoolean, IOptionsNumber, optionsTrueFalseHavingDrivingLicense, AgeEnum } from './Types';
 
 interface ISurveyDataProps {
@@ -72,7 +67,7 @@ const SurveyFormOne: React.FunctionComponent<ISurveyDataProps> = (props) => {
         </Grid>
         <Grid item xs={12}>
           <TextField
-          helperText = {inputValueGender.label==""?"please choose something!":""}
+          helperText = {inputValueGender.label===""?"please choose something!":""}
             id="gender"
             select
             required
@@ -81,7 +76,7 @@ const SurveyFormOne: React.FunctionComponent<ISurveyDataProps> = (props) => {
             value={String(inputValueGender.label)}
             onChange={(e) => {
               try {
-                var val = optionsGender.find(x => x.label == String(e.target.value)) as IOptionsNumber;
+                var val = optionsGender.find(x => x.label === String(e.target.value)) as IOptionsNumber;
                 surveyDataCollected.gender = val;
                 setInputValueGender(val);
               } catch (error) {
@@ -101,10 +96,9 @@ const SurveyFormOne: React.FunctionComponent<ISurveyDataProps> = (props) => {
           </TextField>
         </Grid>
         <Grid item xs={12}>
-
           <TextField
           /* inputProps={{ inputMode: "text", pattern: "[A-Za-z0-9]{1,20}" }} */
-            helperText = {inputHavingCarDrivingLicense.label==""?"please choose something!":""}
+            helperText = {inputHavingCarDrivingLicense.label===""?"please choose something!":""}
             id="havingCarDrivingLicense"
             select
             required
@@ -114,7 +108,7 @@ const SurveyFormOne: React.FunctionComponent<ISurveyDataProps> = (props) => {
             onChange={(e) => {
               try {
                 console.log(e.target.value)
-                var val = optionsTrueFalseHavingDrivingLicense.find(x => x.label == String(e.target.value)) as IOptionsBoolean;
+                var val = optionsTrueFalseHavingDrivingLicense.find(x => x.label === String(e.target.value)) as IOptionsBoolean;
                 surveyDataCollected.havingCarDrivingLicense = val;
                 setInputHavingCarDrivingLicense(val);
                 console.log(val)
@@ -136,7 +130,7 @@ const SurveyFormOne: React.FunctionComponent<ISurveyDataProps> = (props) => {
         </Grid>
        {askIsItYourFirstCar === true? (<Grid item xs={12}>
           <TextField
-            helperText = {inputIsItYourFirstCar.label==""?"please choose something!":""}
+            helperText = {inputIsItYourFirstCar.label===""?"please choose something!":""}
             id="isItYourFirstCar"
             select
             required
@@ -145,7 +139,7 @@ const SurveyFormOne: React.FunctionComponent<ISurveyDataProps> = (props) => {
             value={String(inputIsItYourFirstCar.label)}
             onChange={(e) => {
               try {
-                var val = optionsTrueFalse.find(x => x.label == String(e.target.value)) as IOptionsBoolean;
+                var val = optionsTrueFalse.find(x => x.label === String(e.target.value)) as IOptionsBoolean;
                 surveyDataCollected.isItYourFirstCar = val;
                 setInputIsItYourFirstCar(val);
               } catch (error) {
