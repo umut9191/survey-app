@@ -141,6 +141,7 @@ const SurveyFormOne: React.FunctionComponent<ISurveyDataProps> = (props) => {
               try {
                 var val = optionsTrueFalse.find(x => x.label === String(e.target.value)) as IOptionsBoolean;
                 surveyDataCollected.isItYourFirstCar = val;
+                console.log(val)
                 setInputIsItYourFirstCar(val);
               } catch (error) {
                 console.log(error)

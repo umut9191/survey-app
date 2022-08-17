@@ -62,10 +62,10 @@ const CarMakeModelComponent: React.FunctionComponent<ICarMakeModelProps> = (prop
                     onChange={(e) => {
 
                         var result = { value: inputCarMakeModelCollected.value, label: inputCarMakeModelCollected.label, model: e.target.value } as ICarMakeModel
-                        setInputModel(e.target.value)
+                        setInputModel((e.target.value).toLowerCase())
                         //setInputCarMakeModelCollected(result)
                         //func(sendKey, inputCarMakeModelCollected)
-                        func(sendKey, "","",e.target.value)
+                        func(sendKey, "","",(e.target.value).toLowerCase())
 
                     }}
                 />

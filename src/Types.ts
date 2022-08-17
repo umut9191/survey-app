@@ -52,13 +52,17 @@ enum GenderEnum {
     Fmale = 2,
     Other = 3,
 }
+export enum CompanyStaffSurveyEnum{
+    CompanyStaff =1,
+    Survey = 2
+}
 export enum AgeEnum {
     minAgeLimit = 0,
     maxAgeLimit = 100,
     minAge = 18,
     rangeAge = 25
 }
-enum DrivetrainEnum {
+export enum DrivetrainEnum {
     Default = 0,
     FWD = 1,
     RWD = 2,
