@@ -75,9 +75,6 @@ const CarMakeModelComponent: React.FunctionComponent<ICarMakeModelProps> = (prop
                     onChange={(e) => {
                         var result = { value: inputCarMakeModelCollected.value, label: inputCarMakeModelCollected.label, model: e.target.value } as ICarMakeModel
                         console.log("/^M?m?\d{3}d?D?i?I?$/.test(e.target.value)")
-                        //console.log(/^M?m?\d{3}d?D?i?I?$/.test(e.target.value))
-                       // console.log(optionsCarMakeAndRegexWithHelperMessage.find(x=>x.value == result.value)?.regex.test(e.target.value))
-                       
                         setInputModel((e.target.value).toLowerCase())
                         if(inputCarModelValidation.regex.test(e.target.value)){
                             setIsModelValid(true);
