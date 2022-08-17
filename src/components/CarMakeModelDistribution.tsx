@@ -67,6 +67,16 @@ const CarMakeModelDistribution: React.FunctionComponent<ISurveyDataProps> = (pro
             return { ...cache, [property]: [array] }
         }, {}
         )
+    /*     const groupByCaseInsensitive  = (key: any, arr: any[]) => arr
+        .reduce((cache: any[], array: any[]) => {
+            const property = array[key]
+            
+            if (property in cache) {
+                return { ...cache, [property]: cache[property].concat(array) }
+            }
+            return { ...cache, [property]: [array] }
+        }, {}
+        ) */
     React.useEffect(() => {
         dataToFill.datasets = []
         dataToFill.labels = []

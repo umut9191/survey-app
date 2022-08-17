@@ -45,6 +45,11 @@ export interface ICarMakeModel {
     label: string;
     model: string;
 }
+export interface ICarModelValidation {
+     value: number
+     label: string
+     regex: RegExp
+}
 //export const optionsGender = ["",'M', 'F', 'Other'];
 enum GenderEnum {
     Default = 0,
@@ -107,4 +112,11 @@ export const optionsCarMakeModel = [
     { value: CareMakeEnum.MERCEDES, label: "MERCEDES", model: "" },
     { value: CareMakeEnum.BMW, label: "BMW", model: "" },
     { value: CareMakeEnum.AUDI, label: "AUDI", model: "" }
+];
+//label: "Starts with “A”,“B”,“C”,“E” and 3 Numbers" , regex: /^((A|a|B|b|c|C|E|e)\d{3}$)/},
+//label: "Starts with “M” (optional)- 3 Numbers- Ends with “d” or ”i” (optional) Or Starts with “X” OR “Z”- 1 Number" , regex: /(^M?m?\d{3}d?D?i?I?$)|(^(X|x|Z|z)\d$)/ },
+export const optionsCarMakeAndRegexWithHelperMessage = [
+    { value: CareMakeEnum.MERCEDES, label: "Starts with “A”,“B”,“C”,“E” and 3 Numbers" , regex: /^((A|a|B|b|c|C|E|e)\d{3}$)/},
+    { value: CareMakeEnum.BMW,      label: "Starts with “M” (optional)- 3 Numbers- Ends with “d” or ”i” (optional) Or Starts with “X” OR “Z”- 1 Number" , regex: /(^M?m?\d{3}d?D?i?I?$)|(^(X|x|Z|z)\d$)/ },
+    { value: CareMakeEnum.AUDI,     label: "a and a number from 3 to 8 Or Q and a number from 2 to 8", regex: /(^(a|A)[3-8]$)|(^(q|Q)[2-8]$)/ }
 ];

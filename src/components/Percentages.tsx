@@ -39,7 +39,7 @@ const Percentages: React.FunctionComponent<ISurveyDataProps> = (props) => {
         hoverBorderColor: '#FFFFFF'
       }
     ],
-    labels: [{text}, 'Others']
+    labels: [text, 'Others']
   };
 
   const options = {

@@ -13,29 +13,20 @@ const SurveyFormTwo: React.FunctionComponent<ISurveyDataProps> = (props) => {
   const [inputAreYouWorriedAboutFuelEmissions, setInputAreYouWorriedAboutFuelEmissions] = React.useState(surveyDataCollected.areYouWorriedAboutFuelEmissions);
   const [inputhowManyCarsDoYouHaveInYourFamily, setinputhowManyCarsDoYouHaveInYourFamily] = React.useState(surveyDataCollected.howManyCarsDoYouHaveInYourFamily)
   const runThisFunc = (index:number,value:string,label:string,model:string) => {
-    //console.log(e) 
-    console.log("*****") 
-   console.log(surveyDataCollected.careMakesModels.length)
-   console.log(surveyDataCollected.careMakesModels[index])
-   
      if (value!=="") {
-/*       console.log(value) 
-      console.log(label)  */
     surveyDataCollected.careMakesModels[index].label = label 
      /* */surveyDataCollected.careMakesModels[index].value = Number(value) 
     
     }else{
     surveyDataCollected.careMakesModels[index].model = model 
-    /* console.log(model)  */
+    
     } 
-    //setSurveyCollect(surveyDataCollected)
+    
     console.log(index)
   }
   return (
     <React.Fragment>
-  {/*     <div>
-        {JSON.stringify(surveyDataCollected)}
-      </div> */}
+
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
